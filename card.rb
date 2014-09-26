@@ -1,5 +1,5 @@
 class Card
-attr_reader :definition, :term
+attr_reader :definition, :term, :score
   def initialize(definition, term)
     @definition = definition
     @term = term
@@ -7,7 +7,13 @@ attr_reader :definition, :term
   end
 
   def correct?(answer)
-    @term == answer
+    if @term == answer
+      @score += 1
+      return true
+    else
+      @score -= 1
+      return false
+    end
   end
 
 end
@@ -17,8 +23,9 @@ class Deck
   def initialize files
     @deck = []
     files.each do |file|
-      @deck.concat Deck.make_cards
+      @deck.concat Deck.make_cards file
     end
+    self.shuffle!
   end
 
   # read the contents of the file and creating an array of cards from it
@@ -33,7 +40,12 @@ class Deck
         temp << line.chomp
       end
     end
+
     deck
+  end
+
+  def sort_by_score
+    @deck.sort_by { |card| card.score}.reverse
   end
 
   def check_card answer
@@ -41,7 +53,7 @@ class Deck
   end
 
   def next
-    @deck.rotate(1)
+    @deck.rotate!
   end
 
   def shuffle!
@@ -50,6 +62,10 @@ class Deck
 
   def read_card
     show_definition(@deck.first)
+  end
+
+  def show_term
+    @deck.first.term
   end
 
   def show_definition(card)
