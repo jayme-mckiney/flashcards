@@ -17,7 +17,7 @@ class Deck
   def initialize files
     @deck = []
     files.each do |file|
-      @deck.concat Deck.make_cards
+      @deck.concat Deck.make_cards file
     end
   end
 
@@ -33,6 +33,7 @@ class Deck
         temp << line.chomp
       end
     end
+
     deck
   end
 
@@ -41,7 +42,7 @@ class Deck
   end
 
   def next
-    @deck.rotate(1)
+    @deck.rotate!
   end
 
   def shuffle!
