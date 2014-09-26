@@ -45,7 +45,7 @@ class Deck
   end
 
   def sort_by_score
-    @deck.sort_by { |card| card.score}.reverse
+    @deck.sort_by! { |card| card.score}.reverse!
   end
 
   def check_card answer

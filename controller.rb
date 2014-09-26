@@ -4,10 +4,15 @@ require 'pry'
 require_relative "./card.rb"
 
 module View
-  def self.start
+  def self.start(names)
+    puts ""
     puts "Welcome to the SuperEgo Flashcard Game!!!"
-    puts "You are now being intimidated by the '#{@names}' deck!!!"
+    puts ""
+    puts "You are now being intimidated by the '#{names.first}' deck!!!"
+    puts ""
+    puts "-" * 44
     puts "Here is your first SuperEgo attack! (don't know the answer?)"
+    puts ""
     self.command
   end
 
@@ -16,16 +21,16 @@ module View
   end
 
   def self.skip
-    puts "awww you can't answer that???"
+    puts "LOLz hahahahaha awww you can't answer that - you mad?!?!"
   end
 
   def self.correct
-    puts "Lucky guess."
+    puts "Lucky guess. Mommy helped you?"
     puts ""
   end
 
   def self.incorrect
-    puts "Incorrect! Try again."
+    puts "Incorrect Idiot! Why are you even trying?"
   end
 
   def self.shuffle
@@ -33,6 +38,7 @@ module View
   end
 
   def self.command
+    puts "Here is your SuperEgo Flashcard Commands:"
     puts "Enter 'stop!' to escape from SuperEgo."
     puts "Enter 'skip!' when you are not good enough for the problem."
     puts "Enter 'command!' to see all of the available commands"
@@ -40,6 +46,8 @@ module View
   end
 
   def self.show_card definition
+    puts ""
+    puts "Here is your definition"
     puts definition
   end
 end
@@ -59,10 +67,9 @@ class Controller
 
   def run!
     files = ARGV
-    # files = ['flashcard_samples.txt']
     @names = files.map {|file| file.gsub(/.txt|.csv/,"")}
     deck = Deck.new(files)
-    View.start
+    View.start(@names)
     # user_input = gets.chomp
     until @stop == true
       View.show_card(deck.read_card)
@@ -78,6 +85,9 @@ class Controller
       elsif user_input == "shuffle!"
         deck.shuffle!
         View.shuffle
+      elsif user_input == "sort!"
+
+        deck.sort_by_score
       elsif deck.check_card(user_input)
         deck.next
         View.correct
