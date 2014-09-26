@@ -1,5 +1,5 @@
 # @deck = [obj_card, obj_card, .... ]
-
+require_relative "./card.rb"
 class Controller
   def initialize
     @deck = Card.create_deck

@@ -17,15 +17,16 @@ attr_reader :definition
         deck << Card.new(temp[0], temp[1])
         temp = []
       else
-        temp << line
+        temp << line.chomp
       end
     end
     deck
   end
 end
 
-deck = Card.create_deck
-deck.each do |card|
+# deck = Card.create_deck
+# deck.each do |card|
 
-  puts card.definition
-end
+#   puts card.definition
+#   puts card.term
+# end
