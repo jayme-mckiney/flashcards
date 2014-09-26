@@ -1,18 +1,31 @@
 class Card
-attr_reader :definition
+attr_reader :definition, :term
   def initialize(definition, term)
     @definition = definition
     @term = term
+    @score = 0
   end
 
   def correct?(answer)
     @term == answer
   end
 
-  def self.create_deck
+end
+
+class Deck
+
+  def initialize files
+    @deck = []
+    files.each do |file|
+      @deck.concat Deck.make_cards
+    end
+  end
+
+  # read the contents of the file and creating an array of cards from it
+  def self.make_cards file
     temp = []
     deck = []
-    File.open('flashcard_samples.txt').each do |line|
+    File.open(file).each do |line|
       if line == "\n"
         deck << Card.new(temp[0], temp[1])
         temp = []
@@ -22,11 +35,25 @@ attr_reader :definition
     end
     deck
   end
+
+  def check_card answer
+    @deck.first.correct?(answer)
+  end
+
+  def next
+    @deck.rotate(1)
+  end
+
+  def shuffle!
+    @deck.shuffle!
+  end
+
+  def read_card
+    show_definition(@deck.first)
+  end
+
+  def show_definition(card)
+    card.definition
+  end
+
 end
-
-# deck = Card.create_deck
-# deck.each do |card|
-
-#   puts card.definition
-#   puts card.term
-# end
