@@ -43,7 +43,10 @@ module View
     puts "Enter 'skip!' when you are not good enough for the problem."
     puts "Enter 'command!' to see all of the available commands"
     puts "Enter 'shuffle!' to shuffle your SuperEgo Flashcards"
+    puts "Enter 'sort!' show your worst SuperEgo Weakness"
   end
+
+
 
   def self.show_card definition
     puts ""
@@ -85,6 +88,8 @@ class Controller
       elsif user_input == "shuffle!"
         deck.shuffle!
         View.shuffle
+      elsif user_input == "sort!"
+        deck.sort_by_score
       elsif deck.check_card(user_input)
         deck.next
         View.correct
