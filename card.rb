@@ -45,7 +45,11 @@ class Deck
   end
 
   def sort_by_score
-    @deck.sort_by! { |card| card.score}.reverse!
+    @deck = @deck.sort_by { |card| card.score }
+  end
+
+  def total
+    @deck.inject(0) { |sum, obj| sum += obj.score}
   end
 
   def check_card answer

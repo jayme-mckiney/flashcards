@@ -85,9 +85,6 @@ class Controller
       elsif user_input == "shuffle!"
         deck.shuffle!
         View.shuffle
-      elsif user_input == "sort!"
-
-        deck.sort_by_score
       elsif deck.check_card(user_input)
         deck.next
         View.correct
